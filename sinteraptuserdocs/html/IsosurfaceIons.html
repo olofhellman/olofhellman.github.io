@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>IsosurfaceIons</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h4 id="toc_0">previous topic: <a href="Isosurfaces.html">Isosurfaces</a>   next topic: <a href="Subsets.html">Subsets</a></h4>
+
+<h2 id="toc_1">Isosurface Ions</h2>
+
+<p>In the same way that the proxigram groups ions together that are a certain distance away from the interface, each ion has a &quot;distance to the surface&quot; associated with it.  Sinterapt allows the definition of a shell of ions at a certain distance from the interface by specifying two properties of the surface:</p>
+
+<ul>
+<li><p>shell center:  The center of the shell ( negative values are inside the surface )</p></li>
+<li><p>shell thickness:  The thickness of the cell</p></li>
+</ul>
+
+<p>Based on these two properties, each surface defines a set of ions whose distance from the surface (distToSurf) is greater than  shell center (center) minus half the shell thickness  (thickness)  and  less than  shell center minus plus the shell thickness </p>
+
+<div><pre><code class="language-none">distToSurf &gt; (center - (0.5 * thickness)) AND distToSurf &lt; (center + (0.5 * thickness)) </code></pre></div>
+
+<p>The following script gets the coordinates of every ion in a shell of thickness 0.1 nm centered on a distance 2 nm inside the surface </p>
+
+<div><pre><code class="language-none">tell application &quot;Sinterapt&quot;
+    tell document 1
+        set shell center of surface 1 to -2.0
+        set shell thickness of surface 1 to 0.1
+        coordinates of every ion of surface 1
+    end tell
+end tell</code></pre></div>
+
+<p>The display in the graphics window can also be filtered to only those ions by selecting the surface in the &quot;Ion Filters&quot; dropdown, as shown here:</p>
+
+<p><img src="../images/IsosurfaceIonFilter.png" alt="image" title="Display only the ions within the specified shell relative to the isosurface"></p>
+
+<p>The ions in the specified shell then become accessible in the scripting object hierarchy.  For example, they can be counted, and their properties can be queried.  In this example, simply counting them:</p>
+
+<div><pre><code class="language-none">tell application &quot;Sinterapt&quot;
+    tell document 1
+        count ions of surface 1
+    end tell
+end tell
+
+--&gt; 12094</code></pre></div>
+
+<p>or in this example, getting the coordinates of each of them:</p>
+
+<div><pre><code class="language-none">tell application &quot;Sinterapt&quot;
+    tell document 1
+        get coordinates of every ion of surface 1
+    end tell
+end tell
+
+--&gt; {{y:37.199600219727, x:-1.650835037231, z:-87.087097167969}, 
+{x:-1.456619501114, y:37.289081573486, z:-87.244873046875}, 
+{x:-1.417216181755, y:37.127826690674, z:-87.29109954834}, 
+{x:-1.670113801956, y:36.384609222412, z:-86.889572143555}, ....</code></pre></div>
+
+<h4 id="toc_2">previous topic: <a href="Isosurfaces.html">Isosurfaces</a> next topic: <a href="Subsets.html">Subsets</a></h4>
+
+</body>
+</html> 
